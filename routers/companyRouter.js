@@ -1,9 +1,6 @@
 const router = require("express").Router();
-const debug = require("debug")("app:companyRoutes");
+const companyController = require("../controllers/companyController");
 
-router.get("/", (req, res) => {
-  debug("GET /");
-  res.render("company_index", { title: "Company Index" });
-});
+router.get("/", companyController.company_index_get);
 
 module.exports = router;

@@ -1,9 +1,6 @@
 const router = require("express").Router();
-const debug = require("debug")("app:employeeRouter");
+const employeeController = require("../controllers/employeeController");
 
-router.get("/", (req, res) => {
-  debug("GET /");
-  res.render("employee_index", { title: "Employee Index" });
-});
+router.get("/", employeeController.employee_index_get);
 
 module.exports = router;
