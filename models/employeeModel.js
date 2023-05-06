@@ -25,8 +25,8 @@ const Employee = new Schema(
       {
         Day: { type: String, required: true },
         AllDay: { type: Boolean, required: true },
-        StartTime: { type: Date, required: true },
-        EndTime: { type: Date, required: true },
+        StartTime: { type: Object },
+        EndTime: { type: Object },
       },
     ],
     EmployeeTimeRequests: [
@@ -40,5 +40,35 @@ const Employee = new Schema(
     timestamps: true,
   }
 );
+
+Employee.pre("save", async function (next) {
+  const employeeWeekAvailability = [];
+  const daysOfTheWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  for (let i = 0; i < 7; ++i) {
+    const employeeDayAvailability = {
+      Day: daysOfTheWeek[i],
+      AllDay: true,
+      StartTime: {
+        hour: 0,
+        minute: 0,
+      },
+      EndTime: {
+        hour: 23,
+        minute: 59,
+      },
+    };
+    employeeWeekAvailability.push(employeeDayAvailability);
+  }
+  this.EmployeeWeeklyAvailability = employeeWeekAvailability;
+  next();
+});
 
 module.exports = mongoose.model("Employee", Employee);

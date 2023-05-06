@@ -31,7 +31,7 @@ connectDB();
 /**
  * Delete Expired Objects
  */
-const deleteExpiredObjects = require("../utils/deleteExpiredObjects");
+const deleteExpiredObjects = require("../config/deleteExpiredObjects");
 // Delete expired objects every week
 setInterval(deleteExpiredObjects, 1000 * 60 * 60 * 24 * 7);
 
