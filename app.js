@@ -4,6 +4,12 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
+const dotenv = require("dotenv").config();
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const passport = require("passport");
+
+// Routers
 const indexRouter = require("./routers/indexRouter");
 const employeeRouter = require("./routers/employeeRouter");
 const companyRouter = require("./routers/companyRouter");
@@ -19,6 +25,29 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Session Setup
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    store: MongoStore.create({
+      mongoUrl:
+        process.env.NODE_ENV === "production"
+          ? process.env.MONGO_URI
+          : process.env.MONGO_URI_DEV,
+      collectionName: "sessions",
+    }),
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
+
+// Passport Authentication
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", indexRouter);
 app.use("/user", employeeRouter);
