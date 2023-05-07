@@ -1,17 +1,20 @@
+const passport = require("passport");
+
 exports.company_index_get = (req, res) => {
   res.render("company_index", { title: "Company Index" });
 };
 
-exports.company_detail_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Detail GET");
+exports.company_account_get = (req, res) => {
+  res.send(req.user);
 };
 
 exports.company_login_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Login GET");
+  res.render("company_login", { title: "Company Login", message: {} });
 };
-exports.company_login_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Login POST");
-};
+exports.company_login_post = passport.authenticate("company", {
+  successRedirect: "/company/account",
+  failureRedirect: "/company/login",
+});
 
 exports.company_employees_get = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employees GET");

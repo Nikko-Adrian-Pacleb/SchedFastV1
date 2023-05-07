@@ -11,23 +11,23 @@ const companyCustomFields = {
   passReqToCallback: true,
 };
 const companyVerifyCallback = async (req, companyID, companyPassword, done) => {
+  console.log("companyVerifyCallback");
+  console.log(companyID, companyPassword, req.body.companyCode);
   const company = await Company.findOne({
-    companyCode: req.body.companyCode,
-    companyID: companyID,
-  }).then((company) => {
-    if (!company) {
-      return done(null, false, { message: "Incorrect username." });
-    }
-    // V Bad Code
-    if (company.companyPassword !== companyPassword) {
-      return done(null, false, { message: "Incorrect password." });
-    }
-    // !!! Implement a bcrypt compare here
-    // if (!company.validPassword(password)) {
-    //   return done(null, false, { message: "Incorrect password." });
-    // }
-    return done(null, company);
+    CompanyCode: req.body.companyCode,
+    CompanyID: companyID,
   });
+  console.log(company);
+  if (!company) {
+    return done(null, false);
+  }
+  // V Bad Code
+  if (company.CompanyPassword !== companyPassword) {
+    return done(null, false);
+  }
+  // !!! Implement a bcrypt compare here
+  console.log(company);
+  return done(null, company);
 };
 const companyStrategy = new LocalStrategy(
   companyCustomFields,
@@ -41,9 +41,11 @@ passport.use("company", companyStrategy);
 passport.serializeUser((account, done) => {
   done(null, account.id);
 });
-passport.deserializeUser((id, done) => {
-  const company = Company.findById(id);
-  const employee = Employee.findById(id);
+passport.deserializeUser(async (id, done) => {
+  const company = await Company.findById(id);
+  const employee = await Employee.findById(id);
+  // console.log(company);
+  console.log(company.CompanyName);
   if (company) {
     done(null, company);
   } else if (employee) {

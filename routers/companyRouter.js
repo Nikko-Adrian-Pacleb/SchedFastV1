@@ -10,62 +10,60 @@ router.get("/", companyController.company_index_get);
 router.get("/login", companyController.company_login_get);
 // Login a company
 router.post("/login", companyController.company_login_post);
+// Get company Home Page
+router.get("/account", companyAuth, companyController.company_account_get);
 
 /// S--- Company Employee Routes --- ///
-// Get list of all employees
-router.get(
-  "/:companyId/employees",
-  companyAuth,
-  companyController.company_employees_get
-);
-
 // Get Home page for creating a new employee
 router.get(
-  "/:companyId/employee/create",
+  "/account/employee/create",
   companyAuth,
   companyController.company_employee_create_get
 );
 // Create a new employee
 router.post(
-  "/:companyId/employee/create",
+  "/account/employee/create",
   companyAuth,
   companyController.company_employee_create_post
 );
 
 // Get Home page for updating an employee
 router.get(
-  "/:companyId/employee/:employeeId/update",
+  "/account/employee/:employeeId/update",
   companyAuth,
   companyController.company_employee_update_get
 );
 // Update an employee
 router.put(
-  "/:companyId/employee/:employeeId/update",
+  "/account/employee/:employeeId/update",
   companyAuth,
   companyController.company_employee_update_post
 );
 
 // Get Home page for deleting an employee
 router.get(
-  "/:companyId/employee/:employeeId/delete",
+  "/account/employee/:employeeId/delete",
   companyAuth,
   companyController.company_employee_delete_get
 );
 // Delete an employee
 router.delete(
-  "/:companyId/employee/:employeeId/delete",
+  "/account/employee/:employeeId/delete",
   companyAuth,
   companyController.company_employee_delete_post
 );
 // Get details of a specific employee
 router.get(
-  "/:companyId/employee/:employeeId",
+  "/account/employee/:employeeId",
   companyAuth,
   companyController.company_employee_detail_get
 );
+// Get list of all employees
+router.get(
+  "/account/employees",
+  companyAuth,
+  companyController.company_employees_get
+);
 /// E--- Company Employee Routes --- ///
-
-// Get company Home Page
-router.get("/:companyId", companyAuth, companyController.company_detail_get);
 
 module.exports = router;
