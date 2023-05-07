@@ -13,6 +13,7 @@ const Employee = new Schema(
       required: true,
     },
     EmployeePosition: { type: String, required: true },
+    EmployeeCompanyID: { type: String }, // Login Information
     EmployeeID: { type: String, required: true }, // Login Information
     EmployeePin: { type: String, required: true }, // Login Information
 
@@ -42,6 +43,11 @@ const Employee = new Schema(
 );
 
 Employee.pre("save", async function (next) {
+  // EmployeeCompanyID Setup
+  const company = await Company.findById(this.EmployeeCompany);
+  this.EmployeeCompanyID = company.CompanyID;
+
+  // EmployeeWeekAvailability Setup
   const employeeWeekAvailability = [];
   const daysOfTheWeek = [
     "Sunday",

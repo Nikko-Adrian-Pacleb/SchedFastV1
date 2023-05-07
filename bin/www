@@ -29,6 +29,11 @@ var server = http.createServer(app);
 connectDB();
 
 /**
+ * Passport Config
+ */
+require("../config/passport");
+
+/**
  * Delete Expired Objects
  */
 const deleteExpiredObjects = require("../config/deleteExpiredObjects");
