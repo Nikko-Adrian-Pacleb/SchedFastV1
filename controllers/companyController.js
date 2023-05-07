@@ -6,6 +6,13 @@ exports.company_detail_get = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Detail GET");
 };
 
+exports.company_login_get = (req, res) => {
+  res.send("NOT IMPLEMENTED: Company Login GET");
+};
+exports.company_login_post = (req, res) => {
+  res.send("NOT IMPLEMENTED: Company Login POST");
+};
+
 exports.company_employees_get = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employees GET");
 };
