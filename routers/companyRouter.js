@@ -25,7 +25,7 @@ router.get(
   companyController.company_employee_update_get
 );
 // Update an employee
-router.post(
+router.put(
   "/:companyId/employees/:employeeId/update",
   companyController.company_employee_update_post
 );
@@ -36,7 +36,7 @@ router.get(
   companyController.company_employee_delete_get
 );
 // Delete an employee
-router.post(
+router.delete(
   "/:companyId/employees/:employeeId/delete",
   companyController.company_employee_delete_post
 );
