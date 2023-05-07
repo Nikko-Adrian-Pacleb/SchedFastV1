@@ -10,41 +10,41 @@ router.get("/:companyId/employees", companyController.company_employees_get);
 
 // Get Home page for creating a new employee
 router.get(
-  "/:companyId/employees/create",
+  "/:companyId/employee/create",
   companyController.company_employee_create_get
 );
 // Create a new employee
 router.post(
-  "/:companyId/employees/create",
+  "/:companyId/employee/create",
   companyController.company_employee_create_post
 );
 
 // Get Home page for updating an employee
 router.get(
-  "/:companyId/employees/:employeeId/update",
+  "/:companyId/employee/:employeeId/update",
   companyController.company_employee_update_get
 );
 // Update an employee
 router.put(
-  "/:companyId/employees/:employeeId/update",
+  "/:companyId/employee/:employeeId/update",
   companyController.company_employee_update_post
 );
 
 // Get Home page for deleting an employee
 router.get(
-  "/:companyId/employees/:employeeId/delete",
+  "/:companyId/employee/:employeeId/delete",
   companyController.company_employee_delete_get
 );
 // Delete an employee
 router.delete(
-  "/:companyId/employees/:employeeId/delete",
+  "/:companyId/employee/:employeeId/delete",
   companyController.company_employee_delete_post
 );
 /// E--- Company Employee Routes --- ///
 
 // Get details of a specific employee
 router.get(
-  "/:companyId/employees/:employeeId",
+  "/:companyId/employee/:employeeId",
   companyController.company_employee_detail_get
 );
 
