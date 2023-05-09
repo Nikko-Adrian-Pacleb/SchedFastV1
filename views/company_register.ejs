@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <form method="POST">
+      <input type="text" name="CompanyID" placeholder="company ID" />
+      <input
+        type="text"
+        name="CompanyPassword"
+        placeholder="Company Password"
+      />
+      <br />
+      <input type="text" name="CompanyName" placeholder="Company Name" />
+      <input type="submit" />
+    </form>
+    <% if(errors) { %> <% console.log(errors) %>
+    <p><%= errors %></p>
+    <% } %>
+  </body>
+</html>

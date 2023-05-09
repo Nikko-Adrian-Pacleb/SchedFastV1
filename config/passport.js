@@ -1,6 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const Company = require("../models/companyModel");
 const Employee = require("../models/employeeModel");
 
@@ -21,11 +21,16 @@ const companyVerifyCallback = async (req, companyID, companyPassword, done) => {
   if (!company) {
     return done(null, false);
   }
-  // V Bad Code
-  if (company.CompanyPassword !== companyPassword) {
-    return done(null, false);
-  }
-  // !!! Implement a bcrypt compare here
+
+  bcrypt.compare(companyPassword, company.CompanyPassword, (err, result) => {
+    if (err) {
+      return done(err);
+    }
+    if (!result) {
+      return done(null, false);
+    }
+  });
+
   console.log(company);
   return done(null, company);
 };
@@ -45,8 +50,9 @@ passport.deserializeUser(async (id, done) => {
   const company = await Company.findById(id);
   const employee = await Employee.findById(id);
   // console.log(company);
-  console.log(company.CompanyName);
+  // console.log(company.CompanyName);
   if (company) {
+    console.log("company");
     done(null, company);
   } else if (employee) {
     done(null, employee);
