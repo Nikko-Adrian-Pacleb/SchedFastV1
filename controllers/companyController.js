@@ -44,3 +44,17 @@ exports.company_employee_delete_get = (req, res) => {
 exports.company_employee_delete_post = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employee Delete POST");
 };
+
+exports.company_register_get = (req, res) => {
+  res.send("NOT IMPLEMENTED: Company Register GET");
+};
+exports.company_register_post = (req, res) => {
+  res.send("NOT IMPLEMENTED: Company Register POST");
+};
+
+exports.company_logout_get = (req, res) => {
+  req.logout((err) => {
+    if (err) return next(err);
+  });
+  res.redirect("/company/login");
+};

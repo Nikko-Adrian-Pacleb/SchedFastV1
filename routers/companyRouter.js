@@ -12,6 +12,11 @@ router.get("/login", companyController.company_login_get);
 router.post("/login", companyController.company_login_post);
 // Get company Home Page
 router.get("/account", companyAuth, companyController.company_account_get);
+// Register Company
+router.get("/register", companyController.company_register_get);
+router.post("/register", companyController.company_register_post);
+// Logout Company
+router.get("/logout", companyController.company_logout_get);
 
 /// S--- Company Employee Routes --- ///
 // Get Home page for creating a new employee
