@@ -70,7 +70,8 @@ exports.company_logout_get = (req, res) => {
 };
 
 exports.company_employees_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employees GET");
+  const company = req.user;
+  res.send(company.CompanyEmployees);
 };
 
 exports.company_employee_detail_get = (req, res) => {
