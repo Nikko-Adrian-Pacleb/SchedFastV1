@@ -13,6 +13,7 @@ const passport = require("passport");
 const indexRouter = require("./routers/indexRouter");
 const employeeRouter = require("./routers/employeeRouter");
 const companyRouter = require("./routers/companyRouter");
+const adminRouter = require("./routers/adminRouter");
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.use(passport.session());
 app.use("/", indexRouter);
 app.use("/user", employeeRouter);
 app.use("/company", companyRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
