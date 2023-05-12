@@ -79,10 +79,13 @@ exports.company_employee_detail_get = (req, res) => {
 };
 
 exports.company_employee_create_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Create GET");
+  res.render("company_employee_create", {
+    title: "Create Employee",
+    company: req.user,
+  });
 };
 exports.company_employee_create_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Create POST");
+  res.send(req.body);
 };
 
 exports.company_employee_update_get = (req, res) => {
