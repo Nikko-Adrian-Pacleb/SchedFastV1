@@ -69,6 +69,7 @@ exports.company_logout_get = (req, res) => {
   res.redirect("/company/login");
 };
 
+/// S-Company Employee Routes ///
 exports.company_employees_get = (req, res) => {
   const company = req.user;
   res.send(company.CompanyEmployees);
@@ -101,3 +102,4 @@ exports.company_employee_delete_get = (req, res) => {
 exports.company_employee_delete_post = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employee Delete POST");
 };
+/// E-Company Employee Routes ///
