@@ -7,7 +7,6 @@
   <body>
     <h1><%= title %></h1>
     <form method="POST">
-        <p><%= company %></p>
       <input type="hidden" name="EmployeeCompany" value=<%=company._id%> />
       <select name="EmployeePosition">
         <% for(let i = 0; i < company.CompanyPositions.length; i++) { %>
@@ -28,5 +27,12 @@
         <input type="text" name="EmployeeLastName" placeholder="EmployeeLastName" />
       <input type="submit" />
     </form>
+    <% if(errors) { %>
+    <ul>
+      <% for(let i = 0; i < errors.length; i++) { %>
+      <li><%= errors[i].msg %></li>
+      <% } %>
+    </ul>
+    <% } %>
   </body>
 </html>
