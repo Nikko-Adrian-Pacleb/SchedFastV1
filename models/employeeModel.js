@@ -43,10 +43,6 @@ const Employee = new Schema(
 );
 
 Employee.pre("save", async function (next) {
-  // EmployeeCompanyID Setup
-  const company = await Company.findById(this.EmployeeCompany);
-  this.EmployeeCompanyID = company.CompanyID;
-
   // EmployeeWeekAvailability Setup
   const employeeWeekAvailability = [];
   const daysOfTheWeek = [

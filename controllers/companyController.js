@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { body, validationResult } = require("express-validator");
 const Company = require("../models/companyModel");
 const Employee = require("../models/employeeModel");
+const mongoose = require("mongoose");
 
 exports.company_index_get = (req, res) => {
   res.render("company_index", { title: "Company Index" });
@@ -115,7 +116,6 @@ exports.company_employee_create_post = [
       EmployeeFirstName,
       EmployeeLastName,
     } = req.body;
-
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render("company_employee_create", {
@@ -125,8 +125,10 @@ exports.company_employee_create_post = [
       });
       return;
     }
-    console.log(EmployeeCompanyID);
-    const company = await Company.findById(EmployeeCompany);
+    const EmployeeCompany_id = mongoose.Types.ObjectId(EmployeeCompany);
+    const company = await Company.findById(EmployeeCompany_id).populate(
+      "CompanyEmployees"
+    );
     if (!company) {
       res.render("company_employee_create", {
         title: "Create Employee",
@@ -136,10 +138,11 @@ exports.company_employee_create_post = [
       return;
     }
 
-    console.log(company);
-    console.log(company.CompanyEmployees);
     for (let i = 0; i < company.CompanyEmployees.length; i++) {
-      const employee = await Employee.findById(company.CompanyEmployees[i]);
+      const CompanyEmployeesi_id = mongoose.Types.ObjectId(
+        company.CompanyEmployees[i]
+      );
+      const employee = await Employee.findById(CompanyEmployeesi_id);
       if (employee.EmployeeID == EmployeeID) {
         res.render("company_employee_create", {
           title: "Create Employee",
@@ -159,8 +162,10 @@ exports.company_employee_create_post = [
       EmployeeFirstName: EmployeeFirstName,
       EmployeeLastName: EmployeeLastName,
     });
+    company.CompanyEmployees.push(newEmployee);
     await newEmployee.save();
-    res.redirect("/company/employees");
+    await company.save();
+    res.redirect("/company/account/employees");
   }),
 ];
 
