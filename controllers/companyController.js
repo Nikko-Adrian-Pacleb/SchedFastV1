@@ -172,7 +172,6 @@ exports.company_employee_create_post = [
 exports.company_employee_update_get = asynchandler(async (req, res) => {
   const company = req.user;
   const employee = await Employee.findById(req.params.employeeId);
-  console.log(`employee: ${employee}`);
   if (!employee) res.redirect("/company/account/employees");
 
   res.render("company_employee_update", {
@@ -183,10 +182,47 @@ exports.company_employee_update_get = asynchandler(async (req, res) => {
   });
 });
 
-exports.company_employee_update_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Update POST");
-};
+exports.company_employee_update_post = [
+  body("EmployeePosition", "Employee Position required")
+    .trim()
+    .isLength({ min: 1 }),
+  body("EmployeeID", "Employee ID required").trim().isLength({ min: 1 }),
+  body("EmployeeFirstName", "Employee First Name required")
+    .trim()
+    .isLength({ min: 1 }),
+  body("EmployeeLastName", "Employee Last Name required")
+    .trim()
+    .isLength({ min: 1 }),
+  asynchandler(async (req, res, next) => {
+    const updateFields = {
+      EmployeePosition: req.body.EmployeePosition,
+      EmployeeID: req.body.EmployeeID,
+      EmployeeFirstName: req.body.EmployeeFirstName,
+      EmployeeLastName: req.body.EmployeeLastName,
+      _id: req.params.employeeId,
+    };
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.render("company_employee_update", {
+        title: "Update Employee",
+        company: req.user,
+        errors: errors.array(),
+      });
+      return;
+    }
+    await Employee.findByIdAndUpdate(
+      req.params.employeeId,
+      updateFields,
+      {},
+      (err, theemployee) => {
+        console.log(theemployee);
+        if (err) return next(err);
+      }
+    );
 
+    res.redirect(`/company/account/employee/${req.params.employeeId}`);
+  }),
+];
 exports.company_employee_delete_get = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employee Delete GET");
 };

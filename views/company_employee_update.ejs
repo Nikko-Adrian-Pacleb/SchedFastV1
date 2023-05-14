@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form method="POST">
+    <form method="PUT">
       <input type="hidden" name="EmployeeCompany" value=<%=company._id%> />
       <select name="EmployeePosition">
         <% for(let i = 0; i < company.CompanyPositions.length; i++) { %>
