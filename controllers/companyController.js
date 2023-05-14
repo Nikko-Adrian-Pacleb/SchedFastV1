@@ -77,9 +77,22 @@ exports.company_employees_get = (req, res) => {
   res.send(company.CompanyEmployees);
 };
 
-exports.company_employee_detail_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Detail GET");
-};
+exports.company_employee_detail_get = asynchandler(async (req, res) => {
+  // Get company and employee
+  const company = req.user;
+  const employee = await Employee.findById(req.params.employeeId);
+
+  // Check if employee exists
+  if (!employee) {
+    res.send("Employee not found");
+    return;
+  }
+
+  // Check if employee belongs to company
+  if (employee.EmployeeCompany.toString() != company._id.toString())
+    res.send("Employee not found");
+  else res.send(employee); // Send employee
+});
 
 exports.company_employee_create_get = (req, res) => {
   res.render("company_employee_create", {
