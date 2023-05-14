@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form method="POST">
+      <input type="hidden" name="EmployeeCompany" value=<%=company._id%> />
+      <select name="EmployeePosition">
+        <% for(let i = 0; i < company.CompanyPositions.length; i++) { %>
+        <option value="<%= company.CompanyPositions[i] %>">
+          <%= company.CompanyPositions[i] %>
+        </option>
+        \ <% } %>
+      </select>
+      <label for="EmployeeCompanyID">CompanyCode: </label>
+      <input type="hidden" name="EmployeeCompanyID" value=<%=company.CompanyCode%>><%= company.CompanyCode %></input>
+      <input type="text" name="EmployeeID" placeholder="Employee ID" value=<%= employee.EmployeeID %> />
+      <input type="text" name="EmployeeFirstName" placeholder="EmployeeFirstName" value=<%=employee.EmployeeFirstName%> />
+        <input type="text" name="EmployeeLastName" placeholder="EmployeeLastName" value=<%=employee.EmployeeLastName%> />
+      <input type="submit" />
+    </form>
+    <% if(errors) { %>
+    <ul>
+      <% for(let i = 0; i < errors.length; i++) { %>
+      <li><%= errors[i].msg %></li>
+      <% } %>
+    </ul>
+    <% } %>
+  </body>
+</html>

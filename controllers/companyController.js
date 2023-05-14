@@ -169,9 +169,20 @@ exports.company_employee_create_post = [
   }),
 ];
 
-exports.company_employee_update_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Update GET");
-};
+exports.company_employee_update_get = asynchandler(async (req, res) => {
+  const company = req.user;
+  const employee = await Employee.findById(req.params.employeeId);
+  console.log(`employee: ${employee}`);
+  if (!employee) res.redirect("/company/account/employees");
+
+  res.render("company_employee_update", {
+    title: "Update Employee",
+    errors: false,
+    company: company,
+    employee: employee,
+  });
+});
+
 exports.company_employee_update_post = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employee Update POST");
 };
