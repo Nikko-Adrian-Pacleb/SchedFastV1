@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <form method="PUT">
+    <form method="POST">
       <input type="hidden" name="EmployeeCompany" value=<%=company._id%> />
       <select name="EmployeePosition">
         <% for(let i = 0; i < company.CompanyPositions.length; i++) { %>
@@ -25,7 +25,7 @@
     <% if(errors) { %>
     <ul>
       <% for(let i = 0; i < errors.length; i++) { %>
-      <li><%= errors[i].msg %></li>
+      <li><%= errors[i] %></li>
       <% } %>
     </ul>
     <% } %>

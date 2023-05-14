@@ -194,13 +194,6 @@ exports.company_employee_update_post = [
     .trim()
     .isLength({ min: 1 }),
   asynchandler(async (req, res, next) => {
-    const updateFields = {
-      EmployeePosition: req.body.EmployeePosition,
-      EmployeeID: req.body.EmployeeID,
-      EmployeeFirstName: req.body.EmployeeFirstName,
-      EmployeeLastName: req.body.EmployeeLastName,
-      _id: req.params.employeeId,
-    };
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render("company_employee_update", {
@@ -210,7 +203,15 @@ exports.company_employee_update_post = [
       });
       return;
     }
-    await Employee.findByIdAndUpdate(
+
+    const updateFields = {
+      EmployeePosition: req.body.EmployeePosition,
+      EmployeeID: req.body.EmployeeID,
+      EmployeeFirstName: req.body.EmployeeFirstName,
+      EmployeeLastName: req.body.EmployeeLastName,
+      _id: req.params.employeeId,
+    };
+    Employee.findByIdAndUpdate(
       req.params.employeeId,
       updateFields,
       {},

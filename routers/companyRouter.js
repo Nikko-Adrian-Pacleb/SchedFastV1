@@ -39,7 +39,7 @@ router.get(
   companyController.company_employee_update_get
 );
 // Update an employee
-router.put(
+router.post(
   "/account/employee/:employeeId/update",
   companyAuth,
   companyController.company_employee_update_post
