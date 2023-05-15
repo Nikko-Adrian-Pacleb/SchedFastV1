@@ -246,7 +246,15 @@ exports.company_employee_delete_get = asynchandler(async (req, res) => {
     employee: employee,
   });
 });
-exports.company_employee_delete_post = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Delete POST");
-};
+exports.company_employee_delete_post = asynchandler(async (req, res) => {
+  // Get employee
+  const employee = await Employee.findById(req.params.employeeId);
+  // Delete employee
+  await Employee.findByIdAndDelete(req.params.employeeId);
+  // Delete employee from company
+  const company = req.user;
+  company.CompanyEmployees.pull(req.params.employeeId);
+  await company.save();
+  res.redirect("/company/account/employees");
+});
 /// E-Company Employee Routes ///
