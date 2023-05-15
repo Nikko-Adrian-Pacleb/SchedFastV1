@@ -178,7 +178,7 @@ exports.company_employee_create_post = [
     company.CompanyEmployees.push(newEmployee);
     await newEmployee.save();
     await company.save();
-    res.redirect("/company/account/employees");
+    res.redirect(`/company/account/employee/${newEmployee._id}`);
   }),
 ];
 
@@ -237,9 +237,15 @@ exports.company_employee_update_post = [
     res.redirect(`/company/account/employee/${req.params.employeeId}`);
   }),
 ];
-exports.company_employee_delete_get = (req, res) => {
-  res.send("NOT IMPLEMENTED: Company Employee Delete GET");
-};
+exports.company_employee_delete_get = asynchandler(async (req, res) => {
+  // Get employee
+  const employee = await Employee.findById(req.params.employeeId);
+  res.render("company_employee_delete", {
+    title: "Delete Employee",
+    errors: false,
+    employee: employee,
+  });
+});
 exports.company_employee_delete_post = (req, res) => {
   res.send("NOT IMPLEMENTED: Company Employee Delete POST");
 };

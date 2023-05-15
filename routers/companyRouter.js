@@ -52,7 +52,7 @@ router.get(
   companyController.company_employee_delete_get
 );
 // Delete an employee
-router.delete(
+router.post(
   "/account/employee/:employeeId/delete",
   companyAuth,
   companyController.company_employee_delete_post
